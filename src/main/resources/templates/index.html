@@ -10,7 +10,36 @@
 <body>
 <div th:replace="layout::nav"></div>
 
-<h2>Index Page</h2>
+<h2 align="center">Employee List</h2><br/>
+<br/>
+<table class="table" style="width:100%">
+    <tr>
+        <th sec:authorize="hasAuthority('ADMIN')">Select</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Title</th>
+        <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
+    </tr>
+    <!--enhanced for loop-->
+    <tr th:each="company : ${companies}">
+        <td sec:authorize="hasAuthority('ADMIN')">
+            <input type="checkbox">
+        </td>
+        <td>
+            <a th:href="@{/details/{id}(id=${company.id})}">[[${company.employeename}]]</a><!-- Read -->
+        </td>
+        <td th:text="${company.department}"></td>
+        <td th:text="${company.title}"></td>
+
+        <td sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/details/{id}(id=${company.id})}">Details</a>-<!-- Details -->
+            <a th:href="@{/update/{id}(id=${company.id})}">Edit</a>-<!-- Update -->
+            <a th:href="@{/delete/{id}(id=${company.id})}">Delete</a><!-- Delete -->
+        </td>
+
+    </tr>
+</table>
+<br/>
 
 <div th:replace="layout::footer"></div>
 </body>

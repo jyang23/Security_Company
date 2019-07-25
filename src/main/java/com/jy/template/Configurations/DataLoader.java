@@ -1,7 +1,9 @@
 package com.jy.template.Configurations;
 
+import com.jy.template.Beans.Company;
 import com.jy.template.Beans.Role;
 import com.jy.template.Beans.User;
+import com.jy.template.Repository.CompanyRepository;
 import com.jy.template.Repository.RoleRepository;
 import com.jy.template.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CompanyRepository companyRepository;
 
     //This is moved to the user class to keep it consistent
     //@Autowired
@@ -41,5 +46,9 @@ public class DataLoader implements CommandLineRunner {
         user = new User("system@admin.com", "password", "System", "Admin", true, "admin");
         user.setRoles(Arrays.asList(adminRole));
         userRepository.save(user);
+
+        Company company = new Company("Bart Simpson", "IT", "Developer");
+        company.setUser(user);
+        companyRepository.save(company);
     }
 }
